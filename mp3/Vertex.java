@@ -1,3 +1,5 @@
+package mp3;
+
 /**
  * This class models a vertex of the graph. DO NOT MODIFY THIS FILE.
  */
