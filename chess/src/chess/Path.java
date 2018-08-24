@@ -1,94 +1,109 @@
 package chess;
 
-import java.util.LinkedList;
-
+/*
+ * This class is used to check whether the path for a Bishop, Rook or Queen is clear, 
+ * although it also works with every other piece. 
+ */
 public class Path {
 
-	private Coordinate original;
-	private Coordinate destination;
+	private Coordinate startPoint;
+	private Coordinate endPoint;
 	private Board board;
 	private Piece piece;
 
-	Path(Coordinate original, Coordinate destination, Board board, Piece piece) {
-		this.original = original;
-		this.destination = destination;
+	/*
+	 * A path requires a board and the piece that is moving from startPoint to
+	 * endPoint
+	 */
+	Path(Coordinate endPoint, Board board, Piece piece) {
+		this.startPoint = piece.getPosition();
+		this.endPoint = endPoint;
 		this.board = board;
 		this.piece = piece;
 	}
 
-	public boolean pathIsClear() {
+	/*
+	 * Private method that will return true if the path is clear for an instance of
+	 * a Rook
+	 */
+	private boolean rookPathIsClear() {
+		// If the Rook travels vertical
+		if (this.startPoint.getX() == this.endPoint.getX()) {
+			int max = Math.max(this.startPoint.getY(), this.endPoint.getY());
+			int min = Math.min(this.startPoint.getY(), this.endPoint.getY()) + 1;
+			for (int i = min; i < max; i++) {
+				if (board.isOccupied(new Coordinate(this.startPoint.getX(), i)))
+					return false;
+			}
+			// If the Rook travels horizontally
+		} else {
+			int max = Math.max(this.startPoint.getX(), this.endPoint.getX());
+			int min = Math.min(this.startPoint.getX(), this.endPoint.getX()) + 1;
+			for (int i = min; i < max; i++) {
+				if (board.isOccupied(new Coordinate(i, this.startPoint.getY())))
+					return false;
+			}
+		}
+		return true;
+	}
+
+	/*
+	 * Private method that will return true if the path is clear for an instance of
+	 * a Bishop
+	 */
+	private boolean bishopPathIsClear() {
+		int deltaX = endPoint.getX() - this.startPoint.getX();
+		int deltaY = endPoint.getY() - this.startPoint.getY();
+
+		// (+,+)
+		if (deltaX > 0 && deltaY > 0) {
+			for (int i = 1; i <= deltaX; i++) {
+				if (board.isOccupied(new Coordinate(this.startPoint.getX() + i, this.startPoint.getY() + i))) {
+					return false;
+				}
+			}
+			// (+,-)
+		} else if (deltaX > 0 && deltaY < 0) {
+			for (int i = 1; i <= deltaX; i++) {
+				if (board.isOccupied(new Coordinate(this.startPoint.getX() + i, this.startPoint.getY() - i))) {
+					return false;
+				}
+			}
+			// (-,+)
+		} else if (deltaX < 0 && deltaY > 0) {
+			for (int i = 1; i <= deltaY; i++) {
+				if (board.isOccupied(new Coordinate(this.startPoint.getX() - i, this.startPoint.getY() + i))) {
+					return false;
+				}
+			}
+			// (-,-)
+		} else if (deltaX < 0 && deltaY < 0) {
+			for (int i = 1; i <= deltaY; i++) {
+				if (board.isOccupied(new Coordinate(this.startPoint.getX() - i, this.startPoint.getY() + i))) {
+					return false;
+				}
+			}
+		}
+		return true;
+
+	}
+
+	/*
+	 * Returns true if the path is clear for the piece
+	 */
+	public boolean isClear() {
 
 		switch (piece.getName()) {
 		case "Queen":
-
+			if (startPoint.getX() == endPoint.getX() || startPoint.getY() == endPoint.getY())
+				return rookPathIsClear();
+			return bishopPathIsClear();
 		case "Rook":
-				// If the Rook travels vertical
-			if (this.original.getX() == this.destination.getX()) {
-				int max = Math.max(this.original.getY(), this.destination.getY());
-				int min = Math.min(this.original.getY(), this.destination.getY()) + 1;
-				for (int i = min; i < max; i++) {
-					if (board.isOccupied(new Coordinate(this.original.getX(), i)))
-						return false;
-				}
-				// If the Rook travels horizontally
-			} else {
-				int max = Math.max(this.original.getX(), this.destination.getX());
-				int min = Math.min(this.original.getX(), this.destination.getX()) + 1;
-				for (int i = min; i < max; i++) {
-					if (board.isOccupied(new Coordinate(i, this.original.getY())))
-						return false;
-				}
-			}
+			return rookPathIsClear();
 		case "Bishop":
-			LinkedList<Coordinate> points = new LinkedList<>(getPoints());
-			for (int i = 0; i < points.size(); i++) {
-				if (board.isOccupied(points.get(i)))
-					return false;
-			}
-			return true;
+			return bishopPathIsClear();
 		default:
-			return !board.isOccupied(destination);
+			return !this.board.isOccupied(this.endPoint);
 		}
-	}
-
-	private LinkedList<Coordinate> getPoints() {
-		int y = original.getY();
-		int y1 = destination.getY();
-
-		int x = original.getX();
-		int x1 = destination.getX();
-
-		int m = (y - y1) / (x - x1);
-		int c = y - m * x;
-
-		int max = Math.max(this.original.getX(), this.destination.getX());
-		int min = Math.min(this.original.getX(), this.destination.getX()) + 1;
-
-		LinkedList<Coordinate> points = new LinkedList<>();
-
-		for (int i = min; i < max; i++) {
-			points.add(new Coordinate(i, m * i + c));
-		}
-
-		return points;
-	}
-	
-	public static void main(String[] args) {
-		Board b = new Board();
-		System.out.println(b.getBoard());
-		
-		b.move(new Coordinate(1, 1),new Coordinate(1, 2));
-		b.move(new Coordinate(1, 2),new Coordinate(1, 3));
-		b.move(new Coordinate(0, 1),new Coordinate(0, 2));
-		b.move(new Coordinate(0, 0),new Coordinate(0, 1));
-		b.move(new Coordinate(0, 1),new Coordinate(1, 1));
-		b.move(new Coordinate(1, 3),new Coordinate(1, 4));
-		b.move(new Coordinate(1, 4),new Coordinate(1, 5));
-		b.capture(new Coordinate(1, 5),new Coordinate(2, 6));
-		System.out.println(b.capture(new Coordinate(2, 6),new Coordinate(1, 7)));
-	//	b.move(new Coordinate(1, 4),new Coordinate(1, 5));
-
-		
-		System.out.println(b.getBoard());
 	}
 }

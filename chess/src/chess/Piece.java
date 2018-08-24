@@ -92,7 +92,6 @@ public abstract class Piece {
 	public boolean capture(Coordinate newPosition) {
 		if (canCapture(newPosition)) {
 			this.position = newPosition;
-			System.out.println(position.getX() + "," + position.getY());
 			return true;
 		}
 		return false;

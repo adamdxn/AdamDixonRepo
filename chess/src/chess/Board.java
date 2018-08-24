@@ -60,6 +60,13 @@ public class Board {
 	}
 
 	/*
+	 * Return the piece at the given coordinate or null if there is none
+	 */
+	public Piece getPiece(Coordinate coord) {
+		return this.board[coord.getX()][coord.getY()];
+	}
+
+	/*
 	 * Given a piece and a new position that piece should be placed on the board,
 	 * return true if and only if the piece can be moved to that position. A piece
 	 * can be moved if there are no other pieces occupying the newPosition.
@@ -85,7 +92,6 @@ public class Board {
 	public boolean move(Coordinate oldPosition, Coordinate newPosition) {
 
 		Piece piece = board[oldPosition.getX()][oldPosition.getY()];
-		System.out.println(piece);
 
 		if (pieceCanMove(piece, newPosition)) {
 			piece.setPosition(newPosition);
@@ -95,13 +101,13 @@ public class Board {
 		}
 		return false;
 	}
-	
+
 	public boolean move(int x1, int y1, int x2, int y2) {
 		Piece piece = board[x1][y1];
 		System.out.println(piece);
 
-		if (pieceCanMove(piece, new Coordinate(x2,y2))) {
-			piece.setPosition(new Coordinate(x2,y2));
+		if (pieceCanMove(piece, new Coordinate(x2, y2))) {
+			piece.setPosition(new Coordinate(x2, y2));
 			board[x2][y2] = piece;
 			board[x1][y1] = null;
 			return true;
@@ -109,8 +115,12 @@ public class Board {
 		return false;
 	}
 
+	/*
+	 * Add a piece p to the board at the coordinate cord if cord is not already occupied
+	 */
 	public boolean add(Piece p, Coordinate cord) {
 		if (!isOccupied(cord)) {
+			p.setPosition(cord);
 			this.board[cord.getX()][cord.getY()] = p;
 			return true;
 		}
@@ -119,7 +129,7 @@ public class Board {
 
 	/*
 	 * Get the piece at the position oldPos and see if it can capture the piece at
-	 * position newPos
+	 * position newPos and then do it
 	 */
 	public boolean capture(Coordinate oldPos, Coordinate newPos) {
 		boolean canCapture = false;
