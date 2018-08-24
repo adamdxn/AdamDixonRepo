@@ -14,14 +14,21 @@ public class Queen extends Piece{
 		this.name = "Queen";
 	}
 
-	@Override
-	public boolean canMove(Coordinate cord) {
-		return true;
-	}
+	
 
 	@Override
 	public boolean canCapture(Coordinate cord) {
 		return canMove(cord);
+	}
+
+
+	@Override
+	public boolean canMove(Coordinate cord) {
+		return false;
+	}
+	
+	public static boolean pathIsClear(Path p) {
+		return false;
 	}
 
 }
