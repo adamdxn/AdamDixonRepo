@@ -26,20 +26,20 @@ public class PathTest {
 		Board b = new Board();
 		Piece blackBishop = b.getPiece(new Coordinate(2,0));		
 		
-		b.move(new Coordinate(1, 1), new Coordinate(1, 2));
-		b.move(new Coordinate(1, 2), new Coordinate(1, 3));
-		b.move(new Coordinate(0, 1), new Coordinate(0, 2));
-		b.move(new Coordinate(0, 0), new Coordinate(0, 1));
-		b.move(new Coordinate(0, 1), new Coordinate(1, 1));
-		b.move(new Coordinate(1, 3), new Coordinate(1, 4));
-		b.move(new Coordinate(1, 4), new Coordinate(1, 5));
+		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 2));
+		b.movePiece(new Coordinate(1, 2), new Coordinate(1, 3));
+		b.movePiece(new Coordinate(0, 1), new Coordinate(0, 2));
+		b.movePiece(new Coordinate(0, 0), new Coordinate(0, 1));
+		b.movePiece(new Coordinate(0, 1), new Coordinate(1, 1));
+		b.movePiece(new Coordinate(1, 3), new Coordinate(1, 4));
+		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 5));
 		b.capture(new Coordinate(1, 5), new Coordinate(2, 6));
-		b.move(new Coordinate(1, 1), new Coordinate(1, 4));
-		b.move(new Coordinate(1, 4), new Coordinate(1, 3));
-		b.move(new Coordinate(1, 3), new Coordinate(5, 3));
+		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 4));
+		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 3));
+		b.movePiece(new Coordinate(1, 3), new Coordinate(5, 3));
 		b.capture(new Coordinate(5, 3), new Coordinate(5, 6));
 		b.capture(new Coordinate(5, 6), new Coordinate(4, 6));
-		b.move(new Coordinate(3, 1), new Coordinate(3, 2));
+		b.movePiece(new Coordinate(3, 1), new Coordinate(3, 2));
 		
 		Path path = new Path(new Coordinate(1,1), b, blackBishop);
 
@@ -51,20 +51,20 @@ public class PathTest {
 		Board b = new Board();
 		Piece blackBishop = b.getPiece(new Coordinate(2,0));		
 		
-		b.move(new Coordinate(1, 1), new Coordinate(1, 2));
-		b.move(new Coordinate(1, 2), new Coordinate(1, 3));
-		b.move(new Coordinate(0, 1), new Coordinate(0, 2));
-		b.move(new Coordinate(0, 0), new Coordinate(0, 1));
-		b.move(new Coordinate(0, 1), new Coordinate(1, 1));
-		b.move(new Coordinate(1, 3), new Coordinate(1, 4));
-		b.move(new Coordinate(1, 4), new Coordinate(1, 5));
+		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 2));
+		b.movePiece(new Coordinate(1, 2), new Coordinate(1, 3));
+		b.movePiece(new Coordinate(0, 1), new Coordinate(0, 2));
+		b.movePiece(new Coordinate(0, 0), new Coordinate(0, 1));
+		b.movePiece(new Coordinate(0, 1), new Coordinate(1, 1));
+		b.movePiece(new Coordinate(1, 3), new Coordinate(1, 4));
+		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 5));
 		b.capture(new Coordinate(1, 5), new Coordinate(2, 6));
-		b.move(new Coordinate(1, 1), new Coordinate(1, 4));
-		b.move(new Coordinate(1, 4), new Coordinate(1, 3));
-		b.move(new Coordinate(1, 3), new Coordinate(5, 3));
+		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 4));
+		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 3));
+		b.movePiece(new Coordinate(1, 3), new Coordinate(5, 3));
 		b.capture(new Coordinate(5, 3), new Coordinate(5, 6));
 		b.capture(new Coordinate(5, 6), new Coordinate(4, 6));
-		b.move(new Coordinate(3, 1), new Coordinate(3, 2));
+		b.movePiece(new Coordinate(3, 1), new Coordinate(3, 2));
 		
 		Path path = new Path(new Coordinate(2,4), b, blackBishop);
 		System.out.println(b.getBoard());
@@ -78,20 +78,20 @@ public class PathTest {
 		Board b = new Board();
 		Piece blackQueen = b.getPiece(new Coordinate(4,0));		
 		
-		b.move(new Coordinate(1, 1), new Coordinate(1, 2));
-		b.move(new Coordinate(1, 2), new Coordinate(1, 3));
-		b.move(new Coordinate(0, 1), new Coordinate(0, 2));
-		b.move(new Coordinate(0, 0), new Coordinate(0, 1));
-		b.move(new Coordinate(0, 1), new Coordinate(1, 1));
-		b.move(new Coordinate(1, 3), new Coordinate(1, 4));
-		b.move(new Coordinate(1, 4), new Coordinate(1, 5));
+		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 2));
+		b.movePiece(new Coordinate(1, 2), new Coordinate(1, 3));
+		b.movePiece(new Coordinate(0, 1), new Coordinate(0, 2));
+		b.movePiece(new Coordinate(0, 0), new Coordinate(0, 1));
+		b.movePiece(new Coordinate(0, 1), new Coordinate(1, 1));
+		b.movePiece(new Coordinate(1, 3), new Coordinate(1, 4));
+		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 5));
 		b.capture(new Coordinate(1, 5), new Coordinate(2, 6));
-		b.move(new Coordinate(1, 1), new Coordinate(1, 4));
-		b.move(new Coordinate(1, 4), new Coordinate(1, 3));
-		b.move(new Coordinate(1, 3), new Coordinate(5, 3));
+		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 4));
+		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 3));
+		b.movePiece(new Coordinate(1, 3), new Coordinate(5, 3));
 		b.capture(new Coordinate(5, 3), new Coordinate(5, 6));
 		b.capture(new Coordinate(5, 6), new Coordinate(4, 6));
-		b.move(new Coordinate(3, 1), new Coordinate(3, 2));
+		b.movePiece(new Coordinate(3, 1), new Coordinate(3, 2));
 		
 		Path path = new Path(new Coordinate(2,2), b, blackQueen);
 
@@ -103,20 +103,20 @@ public class PathTest {
 		Board b = new Board();
 		Piece blackQueen = b.getPiece(new Coordinate(4,0));		
 		
-		b.move(new Coordinate(1, 1), new Coordinate(1, 2));
-		b.move(new Coordinate(1, 2), new Coordinate(1, 3));
-		b.move(new Coordinate(0, 1), new Coordinate(0, 2));
-		b.move(new Coordinate(0, 0), new Coordinate(0, 1));
-		b.move(new Coordinate(0, 1), new Coordinate(1, 1));
-		b.move(new Coordinate(1, 3), new Coordinate(1, 4));
-		b.move(new Coordinate(1, 4), new Coordinate(1, 5));
+		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 2));
+		b.movePiece(new Coordinate(1, 2), new Coordinate(1, 3));
+		b.movePiece(new Coordinate(0, 1), new Coordinate(0, 2));
+		b.movePiece(new Coordinate(0, 0), new Coordinate(0, 1));
+		b.movePiece(new Coordinate(0, 1), new Coordinate(1, 1));
+		b.movePiece(new Coordinate(1, 3), new Coordinate(1, 4));
+		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 5));
 		b.capture(new Coordinate(1, 5), new Coordinate(2, 6));
-		b.move(new Coordinate(1, 1), new Coordinate(1, 4));
-		b.move(new Coordinate(1, 4), new Coordinate(1, 3));
-		b.move(new Coordinate(1, 3), new Coordinate(5, 3));
+		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 4));
+		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 3));
+		b.movePiece(new Coordinate(1, 3), new Coordinate(5, 3));
 		b.capture(new Coordinate(5, 3), new Coordinate(5, 6));
 		b.capture(new Coordinate(5, 6), new Coordinate(4, 6));
-		b.move(new Coordinate(3, 1), new Coordinate(3, 2));
+		b.movePiece(new Coordinate(3, 1), new Coordinate(3, 2));
 		
 		Path path = new Path(new Coordinate(4,5), b, blackQueen);
 

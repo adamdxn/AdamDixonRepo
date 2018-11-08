@@ -1,14 +1,20 @@
 package chess;
 
+import java.util.ArrayList;
+
 public class Bishop extends Piece{
 
 	Bishop(String color, int x, int y) {
 		super(color, x, y);
 		this.name = "Bishop";
+		if (this.getColor().equals("White"))
+			this.weight = 30;
+		else
+			this.weight = -30;
 	}
 
 	/*
-	 * Bishop can move in any diagonal direction.
+	 * Bishops can move in any diagonal direction.
 	 */
 	@Override
 	public boolean canMove(Coordinate cord) {
@@ -26,6 +32,11 @@ public class Bishop extends Piece{
 	@Override
 	public boolean canCapture(Coordinate cord) {
 		return canMove(cord);
+	}
+
+	@Override
+	public ArrayList<Move> getAllMoves() {
+		return null;
 	}
 
 }

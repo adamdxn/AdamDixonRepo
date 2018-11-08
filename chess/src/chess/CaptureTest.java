@@ -12,14 +12,14 @@ public class CaptureTest {
 		Board b = new Board();
 		this.b = b;
 
-		b.move(3, 1, 3, 2);
-		b.move(3, 2, 3, 3);
+		b.movePiece(3, 1, 3, 2);
+		b.movePiece(3, 2, 3, 3);
 
-		b.move(3, 6, 3, 5);
+		b.movePiece(3, 6, 3, 5);
 		
 		
-		b.move(4, 6, 4, 5);
-		b.move(4, 5, 4, 4);
+		b.movePiece(4, 6, 4, 5);
+		b.movePiece(4, 5, 4, 4);
 		
 		System.out.println(b.getBoard());
 	}
