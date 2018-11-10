@@ -5,7 +5,6 @@ package chess;
  * although it also works with every other piece. 
  */
 public class Path {
-
 	private Coordinate startPoint;
 	private Coordinate endPoint;
 	private Board board;
@@ -21,13 +20,20 @@ public class Path {
 		this.board = board;
 		this.piece = piece;
 	}
+	
+	Path(int xf, int yf, Board board, Piece piece){
+		this.startPoint = piece.getPosition();
+		this.endPoint = new Coordinate(xf, yf);
+		this.board = board;
+		this.piece = piece;
+	}
 
 	/*
 	 * Private method that will return true if the path is clear for an instance of
 	 * a Rook
 	 */
 	private boolean rookPathIsClear() {
-		// If the Rook travels vertical
+		// If the Rook travels vertically
 		if (this.startPoint.getX() == this.endPoint.getX()) {
 			int max = Math.max(this.startPoint.getY(), this.endPoint.getY());
 			int min = Math.min(this.startPoint.getY(), this.endPoint.getY()) + 1;
@@ -93,17 +99,17 @@ public class Path {
 	 */
 	public boolean isClear() {
 
-		switch (piece.getName()) {
-		case "Queen":
+		if (this.piece instanceof Rook)
+			return rookPathIsClear();
+		else if (this.piece instanceof Bishop)
+			return bishopPathIsClear();
+		else if (this.piece instanceof Queen) {
 			if (startPoint.getX() == endPoint.getX() || startPoint.getY() == endPoint.getY())
 				return rookPathIsClear();
 			return bishopPathIsClear();
-		case "Rook":
-			return rookPathIsClear();
-		case "Bishop":
-			return bishopPathIsClear();
-		default:
-			return !this.board.isOccupied(this.endPoint);
 		}
+		else
+			return !this.board.isOccupied(this.endPoint);
 	}
 }
+

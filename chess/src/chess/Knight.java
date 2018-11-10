@@ -1,10 +1,16 @@
 package chess;
 
+import java.util.ArrayList;
+
 public class Knight extends Piece {
 
 	Knight(String color, int x, int y) {
 		super(color, x, y);
 		this.name = "Knight";
+		if (this.getColor().equals("White"))
+			this.weight = 30;
+		else
+			this.weight = -30;
 	}
 
 	/*
@@ -25,6 +31,12 @@ public class Knight extends Piece {
 	@Override
 	public boolean canCapture(Coordinate cord) {
 		return canMove(cord);
+	}
+
+	@Override
+	public ArrayList<Move> getAllMoves() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
