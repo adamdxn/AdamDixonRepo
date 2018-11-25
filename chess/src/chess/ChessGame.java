@@ -14,6 +14,8 @@ public class ChessGame {
 	}
 	/*
 	 * Begin the game of chess
+	 * 
+	 * @return the player who won the game
 	 */
 	public Player start() {
 		System.out.println(board.getBoard());
@@ -24,6 +26,7 @@ public class ChessGame {
 			if (turn % 2 == 0) {
 				
 				playTurn(human);
+				System.out.println(board.getBoard());
 				checkMate = checkCheckMate(human);
 				if (checkMate) winner = human;
 				
@@ -31,6 +34,7 @@ public class ChessGame {
 			} else {
 				
 				playTurn(computer);
+				System.out.println(board.getBoard());
 				checkMate = checkCheckMate(computer);
 				if (checkMate) winner = computer;
 				
@@ -43,14 +47,28 @@ public class ChessGame {
 	 * Player will play make their move
 	 */
 	private boolean playTurn(Player player) {
+		boolean incorretInput = true;
+		
 		if (player.getColor().equals("White")) {
-		Tile t1 = new Tile(""); // user input
-		Tile t2 = new Tile(""); // user input
-		return player.makeMove(board, t1, t2);
+			
+			while(incorretInput) {
+				System.out.println("Enter the first tile: ");
+				String t1 = player.from();
+				
+				System.out.println("Enter the second tile: ");
+				String t2 = player.to();
+				
+				if (board.turn(human, t1, t2))
+					incorretInput = false;
+				else
+					System.out.println("Incorrect input!");
+			}
+			return true;
 		}
 		else {
+			System.out.println("Computer turn XD");
 			// Computer plays move
-			return false;
+			return true;
 		}
 	}
 	
@@ -59,6 +77,11 @@ public class ChessGame {
 	 */
 	private boolean checkCheckMate(Player player) {
 		return board.checkMate(player.getColor());
+	}
+	
+	public static void main(String[] args) {
+		ChessGame game = new ChessGame(new Board());
+		game.start();
 	}
 	
 }

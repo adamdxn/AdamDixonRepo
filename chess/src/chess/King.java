@@ -7,10 +7,7 @@ public class King extends Piece{
 	King(String color, int x, int y) {
 		super(color, x, y);
 		this.name = "King";
-		if (this.getColor().equals("White"))
-			this.weight = 900;
-		else
-			this.weight = -900;
+		this.weight = (this.getColor().equals("White")) ? 900 : -900;
 	}
 
 	@Override

@@ -9,12 +9,22 @@ public class Move {
 	private Coordinate finalPosition;
 	private Board board;
 	private Piece piece;
+	private TileDecoder td;
 	
 	Move(Board board, Coordinate initialPosition, Coordinate finalPosition){
 		this.setInitialPosition(initialPosition);
 		this.setFinalPosition(finalPosition);
 		this.board = board;
 		this.piece = board.getPiece(initialPosition);
+		this.td = new TileDecoder();
+	}
+	
+	Move(Board board, String initialPosition, String finalPosition){
+		this.td = new TileDecoder();
+		this.setInitialPosition(td.decode(new Tile(initialPosition)));
+		this.setFinalPosition(td.decode(new Tile(finalPosition)));
+		this.board = board;
+		this.piece = board.getPiece(td.decode(new Tile(initialPosition)));
 	}
 	
 	/*

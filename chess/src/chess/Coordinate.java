@@ -43,4 +43,8 @@ public class Coordinate {
 	public void setY(int p) {
 		this.y = p;
 	}
+	
+	public Coordinate returnThis() {
+		return this;
+	}
 }

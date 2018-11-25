@@ -14,10 +14,7 @@ public class Pawn extends Piece {
 	Pawn(String color, int x, int y) {
 		super(color, x, y);
 		this.name = "Pawn";
-		if (this.getColor().equals("White"))
-			this.weight = 10;
-		else
-			this.weight = -10;
+		this.weight = (this.getColor().equals("White")) ? 10 : -10;
 	}
 
 	/*

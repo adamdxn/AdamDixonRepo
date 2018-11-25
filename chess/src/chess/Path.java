@@ -20,6 +20,13 @@ public class Path {
 		this.board = board;
 		this.piece = piece;
 	}
+	
+	Path(int xf, int yf, Board board, Piece piece){
+		this.startPoint = piece.getPosition();
+		this.endPoint = new Coordinate(xf, yf);
+		this.board = board;
+		this.piece = piece;
+	}
 
 	/*
 	 * Private method that will return true if the path is clear for an instance of

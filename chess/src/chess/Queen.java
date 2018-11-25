@@ -14,10 +14,7 @@ public class Queen extends Piece{
 	Queen(String color, int x, int y) {
 		super(color, x, y);
 		this.name = "Queen";
-		if (this.getColor().equals("White"))
-			this.weight = 90;
-		else
-			this.weight = -90;
+		this.weight = (this.getColor().equals("White")) ? 90 : -90;
 	}
 
 	/*

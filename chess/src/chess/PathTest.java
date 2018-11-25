@@ -33,12 +33,12 @@ public class PathTest {
 		b.movePiece(new Coordinate(0, 1), new Coordinate(1, 1));
 		b.movePiece(new Coordinate(1, 3), new Coordinate(1, 4));
 		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 5));
-		b.capture(new Coordinate(1, 5), new Coordinate(2, 6));
+		b.capturePiece(new Coordinate(1, 5), new Coordinate(2, 6));
 		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 4));
 		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 3));
 		b.movePiece(new Coordinate(1, 3), new Coordinate(5, 3));
-		b.capture(new Coordinate(5, 3), new Coordinate(5, 6));
-		b.capture(new Coordinate(5, 6), new Coordinate(4, 6));
+		b.capturePiece(new Coordinate(5, 3), new Coordinate(5, 6));
+		b.capturePiece(new Coordinate(5, 6), new Coordinate(4, 6));
 		b.movePiece(new Coordinate(3, 1), new Coordinate(3, 2));
 		
 		Path path = new Path(new Coordinate(1,1), b, blackBishop);
@@ -58,12 +58,12 @@ public class PathTest {
 		b.movePiece(new Coordinate(0, 1), new Coordinate(1, 1));
 		b.movePiece(new Coordinate(1, 3), new Coordinate(1, 4));
 		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 5));
-		b.capture(new Coordinate(1, 5), new Coordinate(2, 6));
+		b.capturePiece(new Coordinate(1, 5), new Coordinate(2, 6));
 		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 4));
 		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 3));
 		b.movePiece(new Coordinate(1, 3), new Coordinate(5, 3));
-		b.capture(new Coordinate(5, 3), new Coordinate(5, 6));
-		b.capture(new Coordinate(5, 6), new Coordinate(4, 6));
+		b.capturePiece(new Coordinate(5, 3), new Coordinate(5, 6));
+		b.capturePiece(new Coordinate(5, 6), new Coordinate(4, 6));
 		b.movePiece(new Coordinate(3, 1), new Coordinate(3, 2));
 		
 		Path path = new Path(new Coordinate(2,4), b, blackBishop);
@@ -85,12 +85,12 @@ public class PathTest {
 		b.movePiece(new Coordinate(0, 1), new Coordinate(1, 1));
 		b.movePiece(new Coordinate(1, 3), new Coordinate(1, 4));
 		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 5));
-		b.capture(new Coordinate(1, 5), new Coordinate(2, 6));
+		b.capturePiece(new Coordinate(1, 5), new Coordinate(2, 6));
 		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 4));
 		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 3));
 		b.movePiece(new Coordinate(1, 3), new Coordinate(5, 3));
-		b.capture(new Coordinate(5, 3), new Coordinate(5, 6));
-		b.capture(new Coordinate(5, 6), new Coordinate(4, 6));
+		b.capturePiece(new Coordinate(5, 3), new Coordinate(5, 6));
+		b.capturePiece(new Coordinate(5, 6), new Coordinate(4, 6));
 		b.movePiece(new Coordinate(3, 1), new Coordinate(3, 2));
 		
 		Path path = new Path(new Coordinate(2,2), b, blackQueen);
@@ -110,12 +110,12 @@ public class PathTest {
 		b.movePiece(new Coordinate(0, 1), new Coordinate(1, 1));
 		b.movePiece(new Coordinate(1, 3), new Coordinate(1, 4));
 		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 5));
-		b.capture(new Coordinate(1, 5), new Coordinate(2, 6));
+		b.capturePiece(new Coordinate(1, 5), new Coordinate(2, 6));
 		b.movePiece(new Coordinate(1, 1), new Coordinate(1, 4));
 		b.movePiece(new Coordinate(1, 4), new Coordinate(1, 3));
 		b.movePiece(new Coordinate(1, 3), new Coordinate(5, 3));
-		b.capture(new Coordinate(5, 3), new Coordinate(5, 6));
-		b.capture(new Coordinate(5, 6), new Coordinate(4, 6));
+		b.capturePiece(new Coordinate(5, 3), new Coordinate(5, 6));
+		b.capturePiece(new Coordinate(5, 6), new Coordinate(4, 6));
 		b.movePiece(new Coordinate(3, 1), new Coordinate(3, 2));
 		
 		Path path = new Path(new Coordinate(4,5), b, blackQueen);

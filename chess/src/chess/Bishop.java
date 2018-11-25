@@ -7,10 +7,7 @@ public class Bishop extends Piece{
 	Bishop(String color, int x, int y) {
 		super(color, x, y);
 		this.name = "Bishop";
-		if (this.getColor().equals("White"))
-			this.weight = 30;
-		else
-			this.weight = -30;
+		this.weight = (this.getColor().equals("White")) ? 30 : -30;
 	}
 
 	/*
