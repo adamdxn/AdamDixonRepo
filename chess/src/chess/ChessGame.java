@@ -27,7 +27,7 @@ public class ChessGame {
 				
 				playTurn(human);
 				System.out.println(board.getBoard());
-				checkMate = checkCheckMate(human);
+				checkMate = checkCheckMate(computer);
 				if (checkMate) winner = human;
 				
 				
@@ -35,7 +35,7 @@ public class ChessGame {
 				
 				playTurn(computer);
 				System.out.println(board.getBoard());
-				checkMate = checkCheckMate(computer);
+				checkMate = checkCheckMate(human);
 				if (checkMate) winner = computer;
 				
 			} turn++;
@@ -79,9 +79,19 @@ public class ChessGame {
 		return board.checkMate(player.getColor());
 	}
 	
+	public void test() {
+		board.turn(human, "b2", "b3");
+		board.turn(human, "b3", "b4");
+		board.turn(human, "b4", "b5");
+		board.turn(human, "b5", "b6");
+		System.out.println(board.getBoard());
+		boolean b = checkCheckMate(computer);
+	}
+	
 	public static void main(String[] args) {
 		ChessGame game = new ChessGame(new Board());
 		game.start();
+		
 	}
 	
 }

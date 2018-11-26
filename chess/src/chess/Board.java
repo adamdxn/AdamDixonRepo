@@ -1,9 +1,10 @@
 package chess;
 
 import java.util.LinkedList;
-
 /*
  * A board is a mutable object used in a game of chess.
+ * 
+ * TODO: Test getAllMoves()
  */
 public class Board {
 
@@ -71,28 +72,34 @@ public class Board {
 	 ******************************************* Mutating methods ***********************************************
 	 ************************************************************************************************************/
 
+	public void test() {
+		System.out.println(this.getBoard());
+	}
+
+	
 	/*
 	 * Given a piece, move it to a new position. Assume that the new position is not
 	 * already occupied.
 	 * 
 	 * @param initialPosition is not null
 	 * @param finalPosition is not null
-	 * @return true if the piece at position initialPosition successfully moved to finalPosition
+	 * @return true if the piece at position initialPosition successfully moved to finalPosition,
+	 *  false if the initialPosition has no piece or the piece cannot move to finalPosition
 	 */
-	public boolean movePiece(Coordinate initialPosition, Coordinate finalPosition) {
-
+	private boolean movePiece(Coordinate initialPosition, Coordinate finalPosition) {
+		boolean canMove = false;
 		Piece piece = board[initialPosition.getX()][initialPosition.getY()];
 		
 		if (piece == null)
-			return false;
+			return canMove;
 
 		if (pieceCanMove(piece, finalPosition)) {
+			canMove = true;
 			piece.move(finalPosition);
 			board[finalPosition.getX()][finalPosition.getY()] = piece;
 			board[initialPosition.getX()][initialPosition.getY()] = null;
-			return true;
 		}
-		return false;
+		return canMove;
 	}
 
 	/*
@@ -104,16 +111,16 @@ public class Board {
 	 * @return true if the piece at position initialPosition successfully captured the piece
 	 *  at position finalPosition
 	 */
-	public boolean capturePiece(Coordinate initialPosition, Coordinate finalPosition) {
+	private boolean capturePiece(Coordinate initialPosition, Coordinate finalPosition) {
 		boolean canCapture = false;
 		Piece piece = board[initialPosition.getX()][initialPosition.getY()];
 		
 		if (piece == null)
-			return false;
+			return canCapture;
 
-		if (piece.canCapture(finalPosition) && isClear(piece, finalPosition)) {
+		if (pieceCanCapture(piece, finalPosition)) {
 			canCapture = true;
-			piece.move(finalPosition);
+			piece.capture(finalPosition);
 			graveyard.add(board[finalPosition.getX()][finalPosition.getY()]);
 			board[finalPosition.getX()][finalPosition.getY()] = piece;
 			board[initialPosition.getX()][initialPosition.getY()] = null;
@@ -122,7 +129,8 @@ public class Board {
 	}
 	
 	/*
-	 * Given two coordinates, play the turn.
+	 * Given two coordinates, either move the piece from initialPosition to finalPosition
+	 * or capture the piece in finalPosition with the piece from initialPosition.
 	 * 
 	 * @param player is not null and has color either "White" or "Black"
 	 * @param initialPosition is of length 2
@@ -137,7 +145,7 @@ public class Board {
 				|| finalPosition.charAt(1) < 49 || finalPosition.charAt(1) > 56
 				|| initialPosition.length() != 2 || finalPosition.length() != 2)
 			return false;
-		
+
 		TileDecoder td = new TileDecoder();
 			
 		Coordinate iPos = td.decode(new Tile(initialPosition));
@@ -170,6 +178,13 @@ public class Board {
 					&& finalPosition.getY() >= 0 && finalPosition.getY() <= 7 && !isOccupied(finalPosition)
 					&& isClear(piece, finalPosition);
 	}
+	
+	public boolean pieceCanCapture(Piece piece, Coordinate finalPosition) {
+		return (board[finalPosition.getX()][finalPosition.getY()] != null)
+				&& piece.canCapture(finalPosition) 
+				&& isClear(piece, finalPosition) 
+				&& !board[finalPosition.getX()][finalPosition.getY()].getColor().equals(piece.getColor());
+	}
 
 	/*
 	 * Return true if the given position is occupied by a piece.
@@ -195,6 +210,8 @@ public class Board {
 		
 		// (x - 1, y - 1)
 		return (willBeCaptured(king, new Coordinate(x - 1, y - 1))
+				// (x, y)
+				&& (willBeCaptured(king, king.getPosition()))
 				// (x, y - 1)
 				&& (willBeCaptured(king, new Coordinate(x, y - 1))
 				// (x + 1, y - 1)
@@ -210,6 +227,27 @@ public class Board {
 	}
 	
 	/*
+	 * Determine if piece will be captured if it moves to finalPosition
+	 * 
+	 * @param piece is not null
+	 * @param finalPosition is a valid board position
+	 * @return true if piece will be captured, false if not
+	 */
+	private boolean canBeCaptured(Piece piece, Coordinate finalPosition) {
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				// if the position on the board is an enemy piece that can capture your piece return true
+				if (board[x][y] != null && !board[x][y].getColor().equals(piece.getColor())) {
+					Piece enemyPiece = board[x][y];
+					if (enemyPiece.canCapture(finalPosition) && isClear(enemyPiece, finalPosition)) 
+						return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/*
 	 * Determine if the piece will be captured at (finalX, finalY)
 	 * 
 	 * @param piece is not null
@@ -218,25 +256,14 @@ public class Board {
 	 * @param 0 <= finalX <= 7
 	 * @param 0 <= finalY <= 7
 	 * @return true if the piece cannot move to (finalX, finalY) or the piece will be captured
-	 * at (initialX, initialY). Otherwise return true.
+	 * at (initialX, initialY). Otherwise return false.
 	 */
 	private boolean willBeCaptured(Piece piece, Coordinate finalPosition) {
 		
-		if (!pieceCanMove(piece, finalPosition))
+		if ((!finalPosition.isValid() || isOccupied(finalPosition)) && !finalPosition.equals(piece.getPosition()))
 			return true;
-		
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
-				// if the position on the board is an enemy piece that can capture your piece return true
-				if (board[x][y] != null && !board[x][y].getColor().equals(piece.getColor())) {
-					Piece enemyPiece = board[x][y];
-					if (enemyPiece.canCapture(finalPosition) && (new Path(finalPosition, this, enemyPiece)).isClear()) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
+		else
+			return canBeCaptured(piece, finalPosition);
 	}
 	
 	/************************************************************************************************************
@@ -297,16 +324,16 @@ public class Board {
 		
 		LinkedList<Move> moves = new LinkedList<>();
 		
-		for (int y = 0; y <= 7; y++) {
-			for (int x = 0; x <= 7; x++) {
-				if (piece.canCapture(new Coordinate(x,y))) {
-					// add to possible move list
-				}
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				Coordinate pos = new Coordinate(x,y);
+				if (pieceCanMove(piece, pos) || pieceCanCapture(piece, pos)) 
+					moves.add(new Move(piece.getPosition(), new Coordinate(x,y)));	
 			}
 		}
-			
 		return moves;
 	}
+	
 	
 	/************************************************************************************************************
 	 ********************************************** Private methods *********************************************
@@ -315,6 +342,10 @@ public class Board {
 	/*
 	 * Private method that will return true if the path is clear for an instance of
 	 * a Rook
+	 * 
+	 * @param rook is not null
+	 * @param finalPosition is not null
+	 * @return true if the path is clear for a rook to travel to finalPosition
 	 */
 	private boolean rookPathIsClear(Rook rook, Coordinate finalPosition) {
 		Coordinate initialPosition = rook.getPosition();
@@ -341,6 +372,10 @@ public class Board {
 	/*
 	 * Private method that will return true if the path is clear for an instance of
 	 * a Bishop
+	 * 
+	 * @param bishop is not null
+	 * @param finalPosition is not null
+	 * @return true if the path is clear for a rook to travel to finalPosition
 	 */
 	private boolean bishopPathIsClear(Bishop bishop, Coordinate finalPosition) {
 		Coordinate initialPosition = bishop.getPosition();
@@ -383,7 +418,7 @@ public class Board {
 	/*
 	 * Returns true if the path is clear for the piece
 	 */
-	public boolean isClear(Piece piece, Coordinate finalPosition) {
+	private boolean isClear(Piece piece, Coordinate finalPosition) {
 		Coordinate initialPosition = piece.getPosition();
 
 		if (piece instanceof Rook)
@@ -396,7 +431,7 @@ public class Board {
 			return bishopPathIsClear((Bishop) piece, finalPosition);
 		}
 		else
-			return !this.isOccupied(finalPosition);
+			return true;
 	}
 	
 }

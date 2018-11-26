@@ -32,25 +32,23 @@ public abstract class Piece {
 	/*
 	 * Move the piece to the given Coordinate. Return true if the piece is capable
 	 * of moving to the given position.
+	 * 
+	 * @param newPosition is not null
+	 * @return true if the piece successfully moved to newPosition
 	 */
 	public boolean move(Coordinate newPosition) {
-		if (canMove(newPosition)) {
-			setPosition(newPosition);
-			return true;
-		}
-		return false;
+		return canMove(newPosition) ? setPosition(newPosition) : false;
 	}
 
 	/*
 	 * Move the the given Coordinate and capture the piece if and only if the piece
 	 * can move to that position and if the enemy piece can be captured
+	 * 
+	 * @param newPosition is not null
+	 * @return true if the piece successfully captured the piece at newPosition
 	 */
-	public boolean capture(Coordinate newPosition) {
-		if (canCapture(newPosition)) {
-			setPosition(newPosition);
-			return true;
-		}
-		return false;
+	public boolean capture(Coordinate capturePosition) {
+		return canCapture(capturePosition) ? setPosition(capturePosition) : false;
 	}
 	
 	/************************************************************************************************************
@@ -59,6 +57,9 @@ public abstract class Piece {
 	
 	/*
 	 * Abstract function to return true if a move is possible.
+	 * 
+	 * @param cord is not null
+	 * @return true if the piece can move to cord
 	 */
 	public abstract boolean canMove(Coordinate cord);
 
@@ -100,7 +101,8 @@ public abstract class Piece {
 	 ******************************************* Setter functions ***********************************************
 	 ************************************************************************************************************/
 	
-	private void setPosition(Coordinate newPosition) {
+	private boolean setPosition(Coordinate newPosition) {
 		this.position = newPosition;
+		return true;
 	}
 }

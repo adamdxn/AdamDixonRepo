@@ -8,10 +8,6 @@ public class Coordinate {
 	 * Coordinate is an object to represent an x and y coordinate
 	 */
 	Coordinate(int x, int y) {
-
-		if (x > 8 || y > 8)
-			throw new IllegalArgumentException();
-
 		this.x = x;
 		this.y = y;
 	}
@@ -40,11 +36,15 @@ public class Coordinate {
 	/*
 	 * Setter function to set the x coordinate to the given p
 	 */
-	public void setY(int p) {
+	public void setY(int p) {		
 		this.y = p;
 	}
 	
-	public Coordinate returnThis() {
-		return this;
+	public boolean isValid() {
+		return x >= 0 && x <=7 && y >= 0 && y <= 7;
+	}
+	
+	public boolean equals(Coordinate cord) {
+		return cord.getX() == this.getX() && cord.getY() == this.getY();
 	}
 }
